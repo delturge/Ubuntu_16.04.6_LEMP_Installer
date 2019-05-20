@@ -13,7 +13,7 @@ That can be done, but it's not necessary at the moment.
 4. sshd_library: used to configure sshd
 5. mysql_installer: used to install MySQL <---- Requires user intervention to secure mysqld
 6. nginx_installer: used to install Nginx
-7. php7_installer: used to in stall the PHP-FPM
+7. php_installer: used to in stall the PHP-FPM
 8. eval.3xcorp.com.conf: holds configuration settings
 9. configure_eval.3xcorp.com: drives the main line of the program
 
