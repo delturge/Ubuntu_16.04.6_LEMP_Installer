@@ -19,11 +19,11 @@ That can be done, but it's not necessary at the moment.
 
 Notes:
 
-A. At this time, these scripts are totally raw and untested. The gist is there, though.
-B. Certain levels of robust error checking were omitted for brevity.
-C. Configuration file backup and archiving (tar), and a menu system are features I left off.
-D. I hope this is the kind of thing you were looking for.
-E. If I only wanted to install things manually, I could have finished long ago (but, where is the fun in that?)
-F. Not finished, but I it definitely will be.
-G  After testing, this will be pretty sweet.
-H. Thanks you for the opportunity.
+1. At this time, these scripts are totally raw and untested. The gist is there, though.
+2. Certain levels of robust error checking were omitted for brevity.
+3. Configuration file backup and archiving (tar), and a menu system are features I left off.
+4. I hope this is the kind of thing you were looking for.
+5. If I only wanted to install things manually, I could have finished long ago (but, where is the fun in that?)
+6. Not finished, but I it definitely will be.
+7.  After testing, this will be pretty sweet.
+8. Thanks you for the opportunity.
