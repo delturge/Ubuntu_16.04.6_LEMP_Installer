@@ -1,0 +1,100 @@
+# LEMP INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/16/2019 @ 1800 EST All Rights Reserved
+#
+#  A library of core task functions for configuring an instance.
+
+
+################################################################################
+######################### GENERAL LINUX FUNCTIONS ##############################
+################################################################################
+
+function updatePackages ()
+{
+    showLinuxDistInfo
+    apt-get -yvV --show-progress update
+    apt-get -yvV --show-progress upgrade
+    showLinuxDistInfo
+    sleep 5
+}
+
+function upgradeDistribution ()
+{
+    showLinuxDistInfo
+    apt-get -yvV --show-progress dist-upgrade
+    showLinuxDistInfo
+    sleep 5
+}
+
+function cleanUpPackages()
+{
+    newline
+    apt-get -yvV --show-progress autoremove
+    apt-get -yv autoclean
+    newline
+}
+
+function setTimezone ()
+{
+    date
+    message "Changing timezone to US/Eastern (i.e. Eastern Time U.S. -0500 UTC)"
+    sleep 3
+    /usr/bin/timedatectl $1
+    cat timezone
+    date
+    newline
+    sleep 5
+}
+
+function setLocale ()
+{
+    cd /etc/default/
+    showPwd
+
+    message "Checking for installed language packs."
+    apt search language-pack-en | grep 'language-pack-en'
+    message "Checking if en_US.utf8 locale is installed"
+    locale -a | grep 'en_US.utf8'
+    newline
+    cat locale
+    message "Removing colon delimiter from single value in the LANGUAGE priority list."
+    sed -i 's/en_US:/en_US/' locale
+    newline
+    cat locale
+    newline
+    sleep 5
+}
+
+function setHostname ()
+{
+    cd /etc/
+    showPwd
+
+    cat hostname
+    message "Overwriting /etc/hostname"
+    echo $1 > hostname
+    newline
+    cat hostname
+
+    newline
+    hostnamectl | grep 'hostname'
+    message "Changing host name to: $1"
+    hostnamectl set-hostname $1
+    newline
+    hostnamectl  | grep 'hostname'
+    newline
+    /bin/hostname
+    sleep 5
+}
+
+function displayServiceReport ()
+{
+    serviceName=`getServiceName $1`
+
+    getUser $1
+    showServiceStatus $serviceName
+    showServiceNetStatus $serviceName
+    findFiles $1
+    sleep 10
+}

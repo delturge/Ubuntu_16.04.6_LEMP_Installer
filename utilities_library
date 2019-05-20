@@ -1,0 +1,170 @@
+# LEMP INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/16/2019 @ 1800 EST All Rights Reserved
+#
+#  A library of small, useful functions.
+
+
+################################################################################
+########################### UTILITY FUNCTIONS ##################################
+################################################################################
+
+function listToString ()
+{
+    echo "$*"
+}
+
+function fileToString ()
+{
+    echo $(listToString $(cat $1))
+}
+
+function newline ()
+{
+    echo -e "\n\n"
+}
+
+function showPwd ()
+{
+    echo -e "Current Directory\n\n"
+    pwd
+    newline
+}
+
+function message ()
+{
+    newline
+    echo -e "$1"
+    newline
+}
+
+function showLinuxDistInfo ()
+{
+    newline
+    lsb_release -a
+    newline
+}
+
+function getUser ()
+{
+    newline
+    grep "^$1" /etc/passwd
+    newline
+}
+
+function isFile ()
+{
+    if [[ -f $1 ]]
+    then
+        return 0
+    else
+        message "The file $1 does not exist"
+        exit 1
+    fi
+}
+
+function isDirectory ()
+{
+    if [[ -f $1 ]]
+    then
+        return 0
+    else
+        message "The file $1 does not exist"
+        exit 1
+    fi
+}
+
+function isReadable ()
+{
+    if [[ -r $1 ]]
+    then
+        return 0
+    else
+        message "The file $1 is not readable. Check permission."
+        exit 1
+    fi
+}
+
+function isWritable ()
+{
+    if [[ -w $1 ]]
+    then
+        return 0
+    else
+        message "The file $1 is not writable! Check permissions."
+        exit 1
+    fi
+}
+
+function isExecutable ()
+{
+    if [[ -x $1 ]]
+    then
+        return 0
+    else
+        message "The file $1 is not executable! Check permissions."
+        exit 1
+    fi
+}
+
+function isConfigurable ()
+{
+    if isFile $1 && isReadable $1 && isWritable $1
+    then
+        return 0
+    else
+        message "The file $1 is not executable! Check permissions."
+        exit 1
+    fi
+}
+
+function findFile ()
+{ 
+    newline
+    find / -name "$1" -print
+    newline
+}
+
+function getColumn ()
+{
+    echo `cut -d${1} -f${2} $3`
+}
+
+function getServiceName ()
+{
+    newline
+    echo `service --status-all | grep "$1" | awk {`print $4`} | tr -d [:space:]`
+    newline
+}
+
+function start ()
+{
+    systemctl start $1
+}
+
+function stop ()
+{
+    systemctl stop $1
+}
+
+function restart ()
+{
+    systemctl restart $1
+}
+
+function showServiceStatus ()
+{
+    newline
+    systemctl list-unit-files | grep "$1"
+    systemctl status $1
+    newline
+}
+
+function showServiceNetStatus ()
+{
+    newline
+    netstat -lp | grep $1
+    newline
+}
+

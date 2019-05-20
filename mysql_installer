@@ -1,0 +1,51 @@
+# MySQL INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/19/2019 @ 0800 EST All Rights Reserved
+#
+# Installs MySQL with packages using apt-get
+
+
+################################################################################
+############################### MySQL FUNCTIONS ################################
+################################################################################
+
+function lsMysql ()
+{
+    newline
+    findFile mysql
+    newline
+}
+
+function installMySqlClientPackages ()
+{
+    apt-get -yvV --show-progress install mysql-client
+    sleep 5
+}
+
+function secureMySql
+{
+    if isFile $1 && isExecutable $1
+    then
+        . $1
+    fi
+
+    sleep 10
+}
+
+function installMySqlServerPackages ()
+{
+    apt-get -yvV --show-progress install mysql-server
+    newline
+    sleep 5
+}
+
+function installMySqlFromPackages ()
+{
+    installMySqlServerPackages
+}
+
+function installMySqlFromSourceCode ()
+{
+    : # I could update my script, if you want me to.
+}

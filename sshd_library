@@ -1,0 +1,75 @@
+# LEMP INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/19/2019 @ 2000 EST All Rights Reserved
+#
+#  A library of functions for dealing with SSH issues.
+
+
+################################################################################
+############################### SSH FUNCTIONS ##################################
+################################################################################
+
+function setListenerIpAddress ()
+{
+    cd /etc/ssh/
+    showPwd
+
+    message "Changing SSH IP to: $1 ..."
+
+    grep '^#ListenerAddress 0.0.0.0' sshd_config
+    sed -i "s/^#ListenerAddress 0.0.0.0/ListenerAddress $1/" sshd_config
+    grep '^ListenerAddress' sshd_config
+    sleep 3
+}
+
+function setSshTcpPort ()
+{
+    cd /etc/ssh/
+    showPwd
+
+    message "Changing SSH TCP port to $1 ..."
+
+    grep '^#Port' sshd_config
+    sed -i "s/^#Port 22/Port $1/" sshd_config
+    grep '^Port' sshd_config
+    sleep 3
+}
+
+function setupSSH ()
+{
+    setSshTcpPort $1
+    sleep5
+}
+
+function disableRootSshAccess ()
+{
+    cd /etc/ssh/
+    showPwd
+
+    message "Disabling root SSH access ..."
+
+    grep '^#PermitRootLogin' sshd_config
+    sed -i "s/^#PermitRootLogin yes/PermitRootLogin no/" sshd_config
+    grep '^PermitRootLogin' sshd_config
+    sleep 3
+}
+
+function whitelistSshAccess ()
+{
+    cd /etc/ssh/
+    showPwd
+
+    message "Enabling whitelist access to SSH ..."
+
+    grep '^AllowUsers' sshd_config || message "AllowUsers not found in sshd_conf"
+    sed -i "/^PermitRootLogin no/a AllowUsers $1 $2" sshd_config
+    grep '^AllowUsers' sshd_config
+    sleep 3
+}
+
+function secureSSH ()
+{
+    disableRootSshAccess
+    whitelistSshAccess $1 $2
+}

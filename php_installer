@@ -1,0 +1,26 @@
+# PHP 7 INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/19/2019 @ 0800 EST All Rights Reserved
+#
+# Installs PHP 7 with packages using apt-get
+
+
+################################################################################
+############################### PHP FUNCTIONS ##################################
+################################################################################
+
+function setPhpSomething ()
+{
+    :
+}
+
+function installPhpFromPackages ()
+{
+    apt-get -yvV --show-progress install php7.0-fpm
+}
+
+function installPhp7FromSourceCode ()
+{
+    : # I could update my script, if you want me to.
+}

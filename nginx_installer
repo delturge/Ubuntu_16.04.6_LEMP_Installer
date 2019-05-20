@@ -1,0 +1,100 @@
+# Nginx INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/19/2019 @ 0800 EST All Rights Reserved
+#
+# Installs Nginx with packages using apt-get
+
+
+################################################################################
+############################# NGINX FUNCTIONS ##################################
+################################################################################
+
+function setWebRoot ()
+{
+    cd /etc/nginx/
+    showPwd
+
+    message "Changing Nginx web root directory to: $1 ..."
+
+    grep "^\s*root" nginx.conf
+    sed -i "s/\/yoursite\//\/html/$1\//" nginx.conf
+    grep "^\s*root" nginx.conf
+    sleep 3
+}
+
+function setServerName ()
+{
+    cd /etc/nginx/
+    showPwd
+
+    message "Changing Nginx server_name: $1 ..."
+
+    grep "^\s*root" nginx.conf
+    sed -i "s/server_name yoursite.com/server_name $1/" nginx.conf
+    grep "^\s*root" nginx.conf
+    sleep 3
+}
+
+function secureWebRoot ()
+{
+    ls -l $1
+    sleep 5
+    chmod 700 $1
+    ls -l $1
+    newline
+    sleep 5
+}
+
+function makeWebRoot ()
+{
+    webRoot=$1
+
+    baseDir=/var/
+    tailDir=www
+    targetDir="${baseDir}${tailDir}/"
+    
+    # Test for /var/www/
+
+    if [[ ! isDirectory $targetDir ]]
+    then
+        mkdir "${baseDir}${tailDir}"
+        message "Created $targetDir directory."
+    fi
+
+    basedir="${baseDir}${tailDir}/"
+    tailDir=html
+    targetDir="$targetDir${tailDir}/"
+
+    # Test for /var/www/html/
+
+    if [[ ! isDirectory $targetDir ]]
+    then
+        mkdir "${baseDir}${tailDir}"
+        message "Created $targetDir directory."
+    fi
+
+    basedir="${baseDir}${tailDir}/"
+    tailDir=$webRoot
+    targetDir="${targetDir}${tailDir}/"
+
+    if [[ ! isDirectory $targetDir ]]
+    then
+        mkdir "${baseDir}${tailDir}"
+        message "Created $targetDir directory."
+    fi
+
+    sleep 5
+}
+
+function installNginxFromPackages ()
+{
+    apt-get -yvV --show-progress install nginx
+    newline
+    sleep 5
+}
+
+function installNginxFromSourceCode ()
+{
+    : # I could create a script, if you want me to.
+}

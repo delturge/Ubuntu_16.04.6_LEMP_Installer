@@ -1,0 +1,145 @@
+# LEMP INSTALLER x86_64: Ubuntu 16.04.6 LTS #####
+# @version 1.0
+# @author Anthony E. Rutledge
+# @Copyright Anthony E. Rutledge 5/19/2019 @ 2000 EST All Rights Reserved
+#
+#  A library of functions for dealing with user issues.
+
+
+################################################################################
+########################## USER & GROUP FUNCTIONS ##############################
+################################################################################
+
+function setPasswordDefaults ()
+{
+    grep 'PASS_' login.defs
+    message "Setting PASS_MAX_DAYS to 90."
+    sed -i "s/^PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/" login.defs
+    message "Setting PASS_WARN_AGE to 10."
+    sed -i "s/^PASS_WARN_AGE\t7/PASS_MAX_DAYS\t10/" login.defs
+    grep 'PASS_' login.defs
+    newline
+    sleep 5
+}
+
+function getPasswordReport ()
+{
+    if [[ $1 == 0 ]]
+    then 
+        message "Password changed successfully!"
+    else
+        message "Failed to change password!"
+        exit
+    fi
+}
+
+function setPassword ()
+{
+    passwd -S $1
+    sleep 2
+
+    message "Setting password for $1 ..."
+
+    passwd $1
+    getPasswordReport $?
+
+    passwd -S $1
+    sleep 2
+
+}
+
+function setManyPasswords ()
+{
+    message "Setting passwords for $*"
+
+    for user in "$@"
+    do
+        setPassword $user
+        newline
+    done
+}
+
+function configureHomeDir()
+{
+    chown $1:$1 /home/${1}
+    chmod 700 /home/${1}
+}
+
+function secureHomeDirs ()
+{
+    message "Securing home directories for $*"
+
+    for user in "$@"
+    do
+        configureHomeDir $user
+        newline
+    done
+}
+
+function secureHomeDirsFromFile ()
+{
+    message "Securing home directories from this file: ${1}"
+
+    usersString=$(fileToString $1)
+    read -a users <<< $usersString
+    secureHomeDirs "${users[@]}"
+}
+
+function getUseraddReport ()
+{
+    if [[ $1 == 0 ]] then 
+        message "User added successfully."
+    else
+        message "Error: Failed to create the user and group!"
+        exit
+    fi
+}
+
+function addRegularUser ()
+{
+    if [[ ! `grep "^$1:x:" /etc/passwd` ]] then
+        message "Adding $1 ..."
+        useradd -d /home/$1 -e 2020-01-01 -c "Normal user." -s /bin/sh -U $1
+        getUseraddReport $?
+        getUser $1
+        sleep 2
+    else
+        message "The $1 user and group already exist! No user or group added."
+    fi
+}
+
+fucntion addAccounts ()
+{
+    message "Adding users: ${*}"
+
+    for user in "$@"
+    do
+        addRegularUser `echo $user | tr -d [:space:]`
+        newline
+    done
+}
+
+function addAccountsFromFile ()
+{
+    message "Adding users from this file: ${1}"
+
+    usersString=$(fileToString $1)
+    read -a users <<< $usersString
+    addAccounts "${users[@]}"
+}
+
+function addGroup ()
+{
+    groupadd -g $2 $1
+}
+
+function addToGroup ()
+{
+    group=$1
+    shift
+
+    for $user in "$@"
+    do
+        usermod -G $group $user
+    done
+}
