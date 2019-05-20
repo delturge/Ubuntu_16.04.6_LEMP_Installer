@@ -29,8 +29,7 @@
 
 function installWebpage ()
 {
-    message "Initializing $3"
-    touch $1
+    message "Initializing: $3"
     echo $1 > "${2}${3}"
 }
 
