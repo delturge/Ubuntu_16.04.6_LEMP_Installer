@@ -18,6 +18,7 @@ That can be done, but it's not necessary at the moment.
 9. configure_eval.3xcorp.com: drives the main line of the program
 
 Notes:
+
 A. At this time, these scripts are totally raw and untested. The gist is there, though.
 B. Certain levels of robust error checking were omitted for brevity.
 C. Configuration file backup and archiving (tar), and a menu system are features I left off.
