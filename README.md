@@ -4,7 +4,8 @@ A bash Linux configurator LEMP installer for Ubuntu 16.04.6 (under construction)
 This script is modular and 99% automated. It is 90% complete, but 100% cool.
 I have been working off of VirtualBox.
 
-No user interaction will be necessary to complete your LEMP setup.
+Almost no user interaction will be necessary to complete your LEMP setup.
+That can be done, but it's not necessary at the moment.
 
 1. utilities_library: simple helper functions used in other functions.
 2. linux_library: used to configure Ubuntu
