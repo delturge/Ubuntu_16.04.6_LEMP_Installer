@@ -1,7 +1,9 @@
 # Ubuntu_16.04.6_LEMP_Installer
 A bash Linux configurator LEMP installer for Ubuntu 16.04.6 (under construction)
 
-This script is modular and 99% automated, and contains the following files.
+This script is modular and 99% automated. It is 90% complete, but 100% cool.
+I have been working off of VirtualBox.
+
 No user interaction will be necessary to complete your LEMP setup.
 
 1. utilities_library: simple helper functions used in other functions.
@@ -17,8 +19,9 @@ No user interaction will be necessary to complete your LEMP setup.
 Notes:
 A. At this time, these scripts are totally raw and untested. The gist is there, though.
 B. Certain levels of robust error checking were omitted for brevity.
-C. Configuration file backup and archiving (tar) is feature I left off.
+C. Configuration file backup and archiving (tar), and a menu system are features I left off.
 D. I hope this is the kind of thing you were looking for.
 E. If I only wanted to install things manually, I could have finished long ago (but, where is the fun in that?)
 F. Not finished, but I it definitely will be.
-G. Thanks you for the opportunity.
+G  After testing, this will be pretty sweet.
+H. Thanks you for the opportunity.
