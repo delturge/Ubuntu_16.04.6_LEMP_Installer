@@ -125,10 +125,10 @@ echo -e \
  ###############################\n\n"
 
 installMySqlFromPackages
-displayServiceReport $rdbms
+showServiceReport $rdbms
 installMySqlClientPackages
 secureMySql $mysqlSecFile
-restart $service
+restart $rdbms
 
 echo -e \
 "###############################
@@ -138,7 +138,7 @@ echo -e \
  ###############################\n\n"
 
 installNginxFromPackages
-displayServiceReport $httpServer
+showServiceReport $httpServer
 stop $httpServer
 makeWebRoot $webRoot
 secureWebRoot $webRoot
@@ -177,6 +177,6 @@ echo -e \
 setupSSH $sshPort
 secureSSH "${users[@]}"
 restart ssh
-showServiceStatus ssh
+showServiceReport ssh
 
 message "Congratulations! Your Linux instance and LEMP stack has been succesfully configured!"
