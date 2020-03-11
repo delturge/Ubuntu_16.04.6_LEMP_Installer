@@ -783,7 +783,7 @@ echo -e "Securing MySQL installation.\n\n"
 /usr/bin/mysql_secure_installation
 
 echo -e "Installing the anthonyerutledge database.\n\n"
-mysql -u root -p'FreeBSD247!123' < ~/config/apps/mysql/anthonyerutledge.net.sql
+mysql -u root -p'jkljkjkl545!!' < ~/config/apps/mysql/anthonyerutledge.net.sql
 
 echo -e "Allow incoming web traffic TCP 80/443).\n\n"
 cp -fv iptables /etc/sysconfig/
